@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>roberto@backend-os:~# Roberto Sánchez Megías</title>
+  <!-- =====================================================================
+       FLAG #1 (Source Inspector):
+       ¡Buen ojo! Si estás inspeccionando el código fuente, ya tienes la primera:
+       FLAG{s0urc3_1nsp3ct0r_j4v4_b4ck3nd}
+       Pista para la #2: prueba 'ls -la' en la terminal interactiva.
+  ====================================================================== -->
+  <style>
+    :root {
+      --bg: #0b0f0c;
+      --panel: #111813;
+      --border: #2a4d34;
+      --text: #c8f7d4;
+      --muted: #6ea87d;
+      --accent: #39ff7a;
+      --accent-dim: rgba(57, 255, 122, 0.12);
+      --warn: #ffcc4d;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+      padding: 16px;
+      background-image: radial-gradient(rgba(57, 255, 122, 0.06) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.22) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 0 18px rgba(57, 255, 122, 0.08);
+    }
+
+    .brand {
+      font-weight: bold;
+      color: var(--accent);
+      font-size: 0.92rem;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 4px 8px;
+      border: 1px solid transparent;
+      transition: 0.15s;
+    }
+
+    .nav-links a:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .window {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      box-shadow: 4px 4px 0px rgba(42, 77, 52, 0.55);
+    }
+
+    .window-header {
+      background: #162219;
+      border-bottom: 1px solid var(--border);
+      padding: 7px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--muted);
+      display: inline-block;
+    }
+
+    .window-body {
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 1.65rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+    }
+
+    .meta {
+      font-size: 0.83rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 8px 14px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: bold;
+    }
+
+    .btn-secondary {
+      border-color: var(--border);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .stack-card {
+      border: 1px solid var(--border);
+      padding: 14px;
+      background: rgba(11, 15, 12, 0.6);
+    }
+
+    .stack-card h3 {
+      font-size: 0.9rem;
+      color: var(--warn);
+      margin-bottom: 10px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      background: #131c15;
+    }
+
+    .project, .exp-item {
+      border: 1px solid var(--border);
+      padding: 16px;
+      margin-bottom: 14px;
+      background: rgba(11, 15, 12, 0.55);
+    }
+
+    .project:last-child, .exp-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .item-title {
+      font-weight: bold;
+      color: var(--accent);
+      font-size: 0.98rem;
+    }
+
+    .badge {
+      font-size: 0.74rem;
+      padding: 2px 7px;
+      border: 1px solid var(--warn);
+      color: var(--warn);
+    }
+
+    ul.clean-list {
+      padding-left: 18px;
+      margin-top: 8px;
+      font-size: 0.88rem;
+    }
+
+    ul.clean-list li {
+      margin-bottom: 6px;
+    }
+
+    pre.ascii {
+      background: #070a08;
+      border: 1px dashed var(--border);
+      padding: 12px;
+      margin: 12px 0;
+      overflow-x: auto;
+      font-size: 0.77rem;
+      line-height: 1.35;
+      color: #8ee6a6;
+    }
+
+    .terminal-output {
+      background: #070a08;
+      border: 1px solid var(--border);
+      padding: 14px;
+      height: 240px;
+      overflow-y: auto;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+    }
+
+    .terminal-input-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #070a08;
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+    }
+
+    .prompt {
+      color: var(--accent);
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    #cmd-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      outline: none;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
+      background: var(--accent);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding: 12px 0 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">roberto@madrid-srv:~$ ./portfolio.sh</div>
+      <nav class="nav-links">
+        <a href="#home">#home</a>
+        <a href="#stack">#stack</a>
+        <a href="#projects">#projects</a>
+        <a href="#experience">#experience</a>
+        <a href="#terminal">#terminal</a>
+      </nav>
+    </header>
+
+    <!-- #HOME -->
+    <section id="home" class="window">
+      <div class="window-header">
+        <span>[01] /home/roberto/README.md</span>
+        <div class="window-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="window-body">
+        <h1>Roberto Sánchez Megías <span class="cursor"></span></h1>
+        <p class="subtitle">Desarrollador Backend Java · +5 años en aplicaciones críticas, Spring Boot &amp; Spring Batch</p>
+        <p class="meta">Madrid · robersanchmeg@gmail.com · Idiomas: Español (Nativo), Inglés (B1)</p>
+        <p>
+          Especializado en diseño, migración y mantenimiento de microservicios con <strong>Java (8/11/17)</strong> y <strong>Spring Boot</strong>,
+          procesos de alto volumen con <strong>Spring Batch</strong> y bases de datos relacionales (<strong>Oracle SQL, PostgreSQL, MySQL</strong>) en entornos <strong>AWS</strong>.
+          Trabajo en entornos Agile apoyándome en asistentes de IA (GitHub Copilot, Claude) y documentación técnica clara.
+        </p>
+        <div class="cta-row">
+          <a href="cv_Roberto_Sanchez_Megias_es.pdf" download class="btn">[ ↓ Descargar CV (PDF) ]</a>
+          <a href="#projects" class="btn btn-secondary">[ Ver Arquitecturas ]</a>
+          <a href="https://github.com/robersanchmeg" target="_blank" rel="noopener" class="btn btn-secondary">[ GitHub ]</a>
+          <a href="mailto:robersanchmeg@gmail.com" class="btn btn-secondary">[ Contacto ]</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- #STACK -->
+    <section id="stack" class="window">
+      <div class="window-header">
+        <span>[02] /etc/profile.d/stack.conf</span>
+        <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="window-body">
+        <h2>&gt; Stack Técnico</h2>
+        <div class="stack-grid">
+          <div class="stack-card">
+            <h3>// Lenguajes &amp; Frameworks</h3>
+            <div class="tags">
+              <span class="tag">Java 8 / 11 / 17</span>
+              <span class="tag">Spring Boot</span>
+              <span class="tag">Spring Batch</span>
+              <span class="tag">Spring Data JPA</span>
+              <span class="tag">Spring Security</span>
+              <span class="tag">JHipster</span>
+            </div>
+          </div>
+          <div class="stack-card">
+            <h3>// Cloud, DevOps &amp; Testing</h3>
+            <div class="tags">
+              <span class="tag">AWS (EC2, S3)</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Git</span>
+              <span class="tag">Maven / Gradle</span>
+              <span class="tag">JUnit</span>
+              <span class="tag">Mockito</span>
+              <span class="tag">Postman</span>
+            </div>
+          </div>
+          <div class="stack-card">
+            <h3>// BBDD, Arquitectura &amp; IA</h3>
+            <div class="tags">
+              <span class="tag">Oracle SQL / PL/SQL</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">REST APIs</span>
+              <span class="tag">Microservicios</span>
+              <span class="tag">Arquitectura Limpia</span>
+              <span class="tag">GitHub Copilot</span>
+              <span class="tag">Claude</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- #PROJECTS -->
+    <section id="projects" class="window">
+      <div class="window-header">
+        <span>[03] /var/www/projects --architecture-view</span>
+        <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="window-body">
+        <h2>&gt; Arquitecturas &amp; Proyectos</h2>
+
+        <article class="project">
+          <div class="item-head">
+            <span class="item-title">01. Migración de Sistemas Legacy (jBase / T24) a Java &amp; Spring Boot</span>
+            <span class="badge">PRIVATE // BANKING ARCHITECTURE</span>
+          </div>
+          <p>
+            Liderazgo técnico en la modernización del módulo de registros bancarios hacia una arquitectura basada en microservicios y pruebas automatizadas, mejorando rendimiento y mantenibilidad.
+          </p>
+<pre class="ascii">
+[ Legacy jBase / T24 ] ──▶ [ Capa de Adaptación / Migración ] ──▶ [ Microservicios Spring Boot ]
+                                                                           │
+                                                                 [ JUnit + Mockito ]
+</pre>
+          <div class="tags">
+            <span class="tag">Java</span>
+            <span class="tag">Spring Boot</span>
+            <span class="tag">jBase / T24</span>
+            <span class="tag">JUnit &amp; Mockito</span>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="item-head">
+            <span class="item-title">02. Procesamiento Batch de Alto Volumen</span>
+            <span class="badge">PRIVATE // BATCH PIPELINE</span>
+          </div>
+          <p>
+            Desarrollo y optimización de flujos batch orientados al procesamiento masivo de datos con lectura, transformación y persistencia eficiente en entornos bancarios.
+          </p>
+<pre class="ascii">
+[ Fuentes / AWS S3 ] ──▶ [ Spring Batch Job ] ──▶ [ PL/SQL &amp; Oracle SQL ]
+                               │
+                        [ AWS EC2 / Logs ]
+</pre>
+          <div class="tags">
+            <span class="tag">Spring Batch</span>
+            <span class="tag">Oracle SQL</span>
+            <span class="tag">PL/SQL</span>
+            <span class="tag">AWS (EC2, S3)</span>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="item-head">
+            <span class="item-title">03. Aplicaciones Web de Gestión &amp; Control Horario</span>
+            <span class="badge">FULLSTACK // WEB APPS</span>
+          </div>
+          <p>
+            Desarrollo de aplicaciones y portales web para gestión de venta de productos y control de horas de empleados, combinando backend en Spring Boot con interfaces web.
+          </p>
+          <div class="tags">
+            <span class="tag">Spring Boot</span>
+            <span class="tag">JHipster</span>
+            <span class="tag">AngularJS</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">SQL</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- #EXPERIENCE -->
+    <section id="experience" class="window">
+      <div class="window-header">
+        <span>[04] /var/log/career-and-education.log</span>
+        <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="window-body">
+        <h2>&gt; Experiencia &amp; Formación</h2>
+
+        <div class="exp-item">
+          <div class="item-head">
+            <span class="item-title">Desarrollador Web Backend — Accenture</span>
+            <span class="badge">12/2020 - Actualidad · Madrid</span>
+          </div>
+          <ul class="clean-list">
+            <li>Liderazgo técnico en la migración de sistemas legacy (jBase) a arquitectura Java/Spring Boot para Openbank (módulo de registros bancarios).</li>
+            <li>Desarrollo y optimización de flujos Batch (Spring Batch, PL/SQL, Oracle) de alto volumen para CaixaBank y Openbank.</li>
+            <li>Pruebas unitarias y de integración con JUnit y Mockito, además de apoyo con GitHub Copilot y Claude para refactorización y tests.</li>
+            <li>Documentación técnica y funcional en Excel y Word para especificación, mapeo y estandarización de flujos backend.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="item-head">
+            <span class="item-title">Desarrollador Web Fullstack (y Prácticas) — Melit</span>
+            <span class="badge">04/2019 - 12/2020 · Madrid</span>
+          </div>
+          <ul class="clean-list">
+            <li>Desarrollo de aplicaciones y webs de gestión de venta de productos y participación en frontend de gestión de horas de empleados.</li>
+            <li>Stack: JHipster, AngularJS, JavaScript, TypeScript, HTML5, CSS3, Bootstrap, Spring Boot, Java 8, SQL, Git y Jira.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="item-head">
+            <span class="item-title">Formación Académica</span>
+            <span class="badge">EDUCATION</span>
+          </div>
+          <ul class="clean-list">
+            <li><strong>Grado de Ingeniería Informática</strong> — Universitat Oberta de Catalunya (08/2026).</li>
+            <li><strong>Técnico Superior de Desarrollo de Aplicaciones Web</strong> — IES Vista Alegre Madrid (06/2019).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- #TERMINAL -->
+    <section id="terminal" class="window">
+      <div class="window-header">
+        <span>[05] bash — interactive shell (escribe 'help' para empezar)</span>
+        <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="window-body">
+        <div id="terminal-output" class="terminal-output">BackendOS v2.6 — Roberto Sánchez Megías
+Escribe 'help' para ver los comandos. Hay 3 flags escondidas en el sistema.
+</div>
+        <div class="terminal-input-line">
+          <span class="prompt">roberto@backend-os:~$</span>
+          <input type="text" id="cmd-input" placeholder="help | ls -la | whoami | stack | cv" autocomplete="off" />
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Roberto Sánchez Megías · Single-file retro portfolio · GitHub Pages
+    </footer>
+  </div>
+
+  <script>
+    const output = document.getElementById("terminal-output");
+    const input = document.getElementById("cmd-input");
+
+    // Flag #3 en Base64: FLAG{spr1ng_b4tch_b4s364_d3c0d3}
+    const encodedFlag = "RkxBR3tzcHIxbmdfYjR0Y2hfYjRzMzY0X2QzYzBkM30=";
+
+    const commands = {
+      help: () => [
+        "Comandos disponibles:",
+        "  whoami        - Resumen profesional",
+        "  stack         - Stack tecnológico",
+        "  experience    - Resumen de trayectoria",
+        "  cv            - Descargar cv_Roberto_Sanchez_Megias_es.pdf",
+        "  ls            - Listar archivos visibles",
+        "  ls -la        - Listar archivos (incluidos ocultos)",
+        "  cat <archivo> - Leer un archivo (ej: cat README.txt)",
+        "  decode        - Decodificar flag #3 en Base64",
+        "  clear         - Limpiar consola"
+      ].join("\n"),
+
+      whoami: () =>
+        "Roberto Sánchez Megías | Desarrollador Backend Java (+5 años). Java 8/11/17, Spring Boot, Spring Batch, SQL, AWS.",
+
+      stack: () =>
+        "Java 8/11/17, Spring Boot, Spring Batch, Spring Data JPA, Spring Security, Oracle SQL/PL/SQL, PostgreSQL, MySQL, AWS (EC2, S3), Docker, Git, JUnit, Mockito, Copilot, Claude.",
+
+      experience: () =>
+        "Accenture (12/2020 - Actualidad): Backend Java / Spring Boot / Spring Batch / Oracle / AWS.\nMelit (04/2019 - 12/2020): Fullstack (JHipster, AngularJS, Spring Boot, SQL).",
+
+      cv: () => {
+        const link = document.createElement("a");
+        link.href = "cv_Roberto_Sanchez_Megias_es.pdf";
+        link.download = "cv_Roberto_Sanchez_Megias_es.pdf";
+        link.click();
+        return "Descargando cv_Roberto_Sanchez_Megias_es.pdf...";
+      },
+
+      ls: () => "README.txt   stack.conf   cv_Roberto_Sanchez_Megias_es.pdf",
+
+      "ls -la": () =>
+        "drwxr-xr-x  roberto  staff  .\n-rw-r--r--  roberto  staff  README.txt\n-rw-r--r--  roberto  staff  stack.conf\n-rw-r--r--  roberto  staff  cv_Roberto_Sanchez_Megias_es.pdf\n-rw-------  roberto  staff  .flag_oculta",
+
+      "cat readme.txt": () =>
+        "¡Hola! Soy Roberto, Backend Java Developer en Madrid. Si buscas el CV, usa 'cv' o el botón de portada.",
+
+      "cat .flag_oculta": () =>
+        "¡FLAG #2 encontrada! -> FLAG{h1dd3n_f1l3_l1nux_tr4ck}\nPista para la #3: prueba el comando 'decode'.",
+
+      decode: () =>
+        `Decodificando [${encodedFlag}]...\n¡FLAG #3 encontrada! -> ${atob(encodedFlag)}`,
+
+      clear: () => {
+        output.textContent = "";
+        return null;
+      }
+    };
+
+    function printLine(text) {
+      if (text === null) return;
+      output.textContent += "\n" + text + "\n";
+      output.scrollTop = output.scrollHeight;
+    }
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const raw = input.value.trim();
+        if (!raw) return;
+        printLine(`roberto@backend-os:~$ ${raw}`);
+        const normalized = raw.toLowerCase();
+
+        if (commands[normalized]) {
+          printLine(commands[normalized]());
+        } else {
+          printLine(`bash: ${raw}: orden no encontrada. Escribe 'help'.`);
+        }
+        input.value = "";
+      }
+    });
+  </script>
+</body>
+</html>
