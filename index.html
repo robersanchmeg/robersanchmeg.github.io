@@ -349,6 +349,7 @@
         <a href="#home">#home</a>
         <a href="#stack">#stack</a>
         <a href="#projects">#projects</a>
+        <a href="#ai-workflow">#ai</a>
         <a href="#experience">#experience</a>
         <a href="#terminal">#terminal</a>
       </nav>
@@ -367,12 +368,12 @@
         <p>
           Especializado en diseño, migración y mantenimiento de microservicios con <strong>Java (8/11/17)</strong> y <strong>Spring Boot</strong>,
           procesos de alto volumen con <strong>Spring Batch</strong> y bases de datos relacionales (<strong>Oracle SQL, PostgreSQL, MySQL</strong>) en entornos <strong>AWS</strong>.
-          Trabajo en entornos Agile apoyándome en asistentes de IA (GitHub Copilot, Claude) y documentación técnica clara.
+          Trabajo en entornos Agile apoyándome en asistentes de IA (<strong>GitHub Copilot</strong>, <strong>Claude</strong>) y documentación técnica clara.
         </p>
         <div class="cta-row">
           <a href="cv_Roberto_Sanchez_Megias_es.pdf" download class="btn">[ ↓ Descargar CV (PDF) ]</a>
           <a href="#projects" class="btn btn-secondary">[ Ver Arquitecturas ]</a>
-          <a href="https://github.com/robersanchmeg" target="_blank" rel="noopener" class="btn btn-secondary">[ GitHub ]</a>
+          <a href="#ai-workflow" class="btn btn-secondary">[ Workflow IA ]</a>
           <a href="mailto:robersanchmeg@gmail.com" class="btn btn-secondary">[ Contacto ]</a>
         </div>
       </div>
@@ -497,10 +498,30 @@
       </div>
     </section>
 
+    <!-- #AI-WORKFLOW -->
+    <section id="ai-workflow" class="window">
+      <div class="window-header">
+        <span>[04] /opt/ai-workflow/copilot-claude.conf</span>
+        <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="window-body">
+        <h2>&gt; Flujo de Trabajo con IA (GitHub Copilot &amp; Claude)</h2>
+        <p class="subtitle">
+          Uso de asistentes de IA como aceleradores técnicos en el ciclo de desarrollo, manteniendo criterio de arquitectura, revisión manual y confidencialidad.
+        </p>
+        <ul class="clean-list">
+          <li><strong>Refactorización y migración de legacy:</strong> apoyo con <strong>Claude</strong> y <strong>GitHub Copilot</strong> para analizar lógica existente, reducir acoplamiento y agilizar transiciones hacia Java y Spring Boot.</li>
+          <li><strong>Pruebas unitarias y de integración:</strong> generación rápida de escenarios, mocks y casos límite con <strong>JUnit</strong> y <strong>Mockito</strong> para reforzar la cobertura y fiabilidad del código.</li>
+          <li><strong>Análisis de batch, SQL y documentación:</strong> contraste de enfoques de procesamiento, depuración y redacción estructurada de documentación técnica y funcional.</li>
+          <li><strong>Control humano y privacidad:</strong> verificación de cada cambio en pruebas y revisión de código, respetando estrictamente la seguridad y confidencialidad de los datos empresariales.</li>
+        </ul>
+      </div>
+    </section>
+
     <!-- #EXPERIENCE -->
     <section id="experience" class="window">
       <div class="window-header">
-        <span>[04] /var/log/career-and-education.log</span>
+        <span>[05] /var/log/career-and-education.log</span>
         <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
       </div>
       <div class="window-body">
@@ -546,7 +567,7 @@
     <!-- #TERMINAL -->
     <section id="terminal" class="window">
       <div class="window-header">
-        <span>[05] bash — interactive shell (escribe 'help' para empezar)</span>
+        <span>[06] bash — interactive shell (escribe 'help' para empezar)</span>
         <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
       </div>
       <div class="window-body">
@@ -555,7 +576,7 @@ Escribe 'help' para ver los comandos. Hay 3 flags escondidas en el sistema.
 </div>
         <div class="terminal-input-line">
           <span class="prompt">roberto@backend-os:~$</span>
-          <input type="text" id="cmd-input" placeholder="help | ls -la | whoami | stack | cv" autocomplete="off" />
+          <input type="text" id="cmd-input" placeholder="help | ai | ls -la | whoami | stack | cv" autocomplete="off" />
         </div>
       </div>
     </section>
@@ -577,6 +598,7 @@ Escribe 'help' para ver los comandos. Hay 3 flags escondidas en el sistema.
         "Comandos disponibles:",
         "  whoami        - Resumen profesional",
         "  stack         - Stack tecnológico",
+        "  ai            - Uso de GitHub Copilot y Claude",
         "  experience    - Resumen de trayectoria",
         "  cv            - Descargar cv_Roberto_Sanchez_Megias_es.pdf",
         "  ls            - Listar archivos visibles",
@@ -591,6 +613,9 @@ Escribe 'help' para ver los comandos. Hay 3 flags escondidas en el sistema.
 
       stack: () =>
         "Java 8/11/17, Spring Boot, Spring Batch, Spring Data JPA, Spring Security, Oracle SQL/PL/SQL, PostgreSQL, MySQL, AWS (EC2, S3), Docker, Git, JUnit, Mockito, Copilot, Claude.",
+
+      ai: () =>
+        "Workflow IA: GitHub Copilot + Claude para refactorización de legacy, generación de tests (JUnit/Mockito), contraste de batch/SQL y documentación técnica, siempre con revisión humana.",
 
       experience: () =>
         "Accenture (12/2020 - Actualidad): Backend Java / Spring Boot / Spring Batch / Oracle / AWS.\nMelit (04/2019 - 12/2020): Fullstack (JHipster, AngularJS, Spring Boot, SQL).",
