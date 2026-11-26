@@ -79,20 +79,27 @@
     .brand {
       font-weight: bold;
       color: var(--accent);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
+    }
+
+    .topbar-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
     }
 
     .nav-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
     .nav-links a {
       color: var(--text);
       text-decoration: none;
-      font-size: 0.85rem;
-      padding: 4px 8px;
+      font-size: 0.82rem;
+      padding: 4px 7px;
       border: 1px solid transparent;
       transition: 0.15s;
     }
@@ -101,6 +108,30 @@
       border-color: var(--accent);
       background: var(--accent-dim);
       color: var(--accent);
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 6px;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 4px 8px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .lang-btn.active,
+    .lang-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+      font-weight: bold;
     }
 
     .window {
@@ -150,12 +181,12 @@
 
     .subtitle {
       color: var(--muted);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       font-size: 0.92rem;
     }
 
     .meta {
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       color: var(--muted);
       margin-bottom: 14px;
     }
@@ -163,7 +194,7 @@
     .cta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       margin-top: 16px;
     }
 
@@ -175,7 +206,7 @@
       background: var(--accent-dim);
       text-decoration: none;
       font-family: var(--font-mono);
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       cursor: pointer;
       transition: 0.15s;
     }
@@ -253,7 +284,7 @@
     .item-title {
       font-weight: bold;
       color: var(--accent);
-      font-size: 0.98rem;
+      font-size: 0.96rem;
     }
 
     .badge {
@@ -345,14 +376,20 @@
   <div class="container">
     <header class="topbar">
       <div class="brand">roberto@madrid-srv:~$ ./portfolio.sh</div>
-      <nav class="nav-links">
-        <a href="#home">#home</a>
-        <a href="#stack">#stack</a>
-        <a href="#projects">#projects</a>
-        <a href="#ai-workflow">#ai</a>
-        <a href="#experience">#experience</a>
-        <a href="#terminal">#terminal</a>
-      </nav>
+      <div class="topbar-right">
+        <nav class="nav-links">
+          <a href="#home">#home</a>
+          <a href="#stack">#stack</a>
+          <a href="#projects">#projects</a>
+          <a href="#ai-workflow">#ai</a>
+          <a href="#experience">#experience</a>
+          <a href="#terminal">#terminal</a>
+        </nav>
+        <div class="lang-switch" aria-label="Language selector">
+          <button type="button" class="lang-btn active" id="btn-es">[ ES ]</button>
+          <button type="button" class="lang-btn" id="btn-en">[ EN ]</button>
+        </div>
+      </div>
     </header>
 
     <!-- #HOME -->
@@ -363,18 +400,18 @@
       </div>
       <div class="window-body">
         <h1>Roberto Sánchez Megías <span class="cursor"></span></h1>
-        <p class="subtitle">Desarrollador Backend Java · +5 años en aplicaciones críticas, Spring Boot &amp; Spring Batch</p>
-        <p class="meta">Madrid · robersanchmeg@gmail.com · Idiomas: Español (Nativo), Inglés (B1)</p>
-        <p>
+        <p class="subtitle" data-i18n="subtitle">Desarrollador Backend Java · +5 años en aplicaciones críticas, Spring Boot &amp; Spring Batch</p>
+        <p class="meta" data-i18n="meta">Madrid, España · robersanchmeg@gmail.com · Idiomas: Español (Nativo), Inglés (B1)</p>
+        <p data-i18n="heroSummary">
           Especializado en diseño, migración y mantenimiento de microservicios con <strong>Java (8/11/17)</strong> y <strong>Spring Boot</strong>,
           procesos de alto volumen con <strong>Spring Batch</strong> y bases de datos relacionales (<strong>Oracle SQL, PostgreSQL, MySQL</strong>) en entornos <strong>AWS</strong>.
           Trabajo en entornos Agile apoyándome en asistentes de IA (<strong>GitHub Copilot</strong>, <strong>Claude</strong>) y documentación técnica clara.
         </p>
         <div class="cta-row">
-          <a href="cv_Roberto_Sanchez_Megias_es.pdf" download class="btn">[ ↓ Descargar CV (PDF) ]</a>
-          <a href="#projects" class="btn btn-secondary">[ Ver Arquitecturas ]</a>
-          <a href="#ai-workflow" class="btn btn-secondary">[ Workflow IA ]</a>
-          <a href="mailto:robersanchmeg@gmail.com" class="btn btn-secondary">[ Contacto ]</a>
+          <a id="cv-link" href="cv_Roberto_Sanchez_Megias_es.pdf" download="cv_Roberto_Sanchez_Megias_es.pdf" class="btn" data-i18n="downloadCv">[ ↓ Descargar CV (PDF) ]</a>
+          <a href="https://github.com/robersanchmeg" target="_blank" rel="noopener" class="btn btn-secondary">[ GitHub ]</a>
+          <a href="https://www.linkedin.com/in/roberto-s%C3%A1nchez-meg%C3%ADas" target="_blank" rel="noopener" class="btn btn-secondary">[ LinkedIn ]</a>
+          <a href="mailto:robersanchmeg@gmail.com" class="btn btn-secondary" data-i18n="contactBtn">[ Contacto ]</a>
         </div>
       </div>
     </section>
@@ -386,10 +423,10 @@
         <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
       </div>
       <div class="window-body">
-        <h2>&gt; Stack Técnico</h2>
+        <h2 data-i18n="stackTitle">&gt; Stack Técnico</h2>
         <div class="stack-grid">
           <div class="stack-card">
-            <h3>// Lenguajes &amp; Frameworks</h3>
+            <h3 data-i18n="stackCat1">// Lenguajes &amp; Frameworks</h3>
             <div class="tags">
               <span class="tag">Java 8 / 11 / 17</span>
               <span class="tag">Spring Boot</span>
@@ -400,7 +437,7 @@
             </div>
           </div>
           <div class="stack-card">
-            <h3>// Cloud, DevOps &amp; Testing</h3>
+            <h3 data-i18n="stackCat2">// Cloud, DevOps &amp; Testing</h3>
             <div class="tags">
               <span class="tag">AWS (EC2, S3)</span>
               <span class="tag">Docker</span>
@@ -412,7 +449,7 @@
             </div>
           </div>
           <div class="stack-card">
-            <h3>// BBDD, Arquitectura &amp; IA</h3>
+            <h3 data-i18n="stackCat3">// BBDD, Arquitectura &amp; IA</h3>
             <div class="tags">
               <span class="tag">Oracle SQL / PL/SQL</span>
               <span class="tag">PostgreSQL</span>
@@ -435,14 +472,14 @@
         <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
       </div>
       <div class="window-body">
-        <h2>&gt; Arquitecturas &amp; Proyectos</h2>
+        <h2 data-i18n="projectsTitle">&gt; Arquitecturas &amp; Proyectos</h2>
 
         <article class="project">
           <div class="item-head">
-            <span class="item-title">01. Migración de Sistemas Legacy (jBase / T24) a Java &amp; Spring Boot</span>
+            <span class="item-title" data-i18n="p1Title">01. Migración de Sistemas Legacy (jBase / T24) a Java &amp; Spring Boot</span>
             <span class="badge">PRIVATE // BANKING ARCHITECTURE</span>
           </div>
-          <p>
+          <p data-i18n="p1Desc">
             Liderazgo técnico en la modernización del módulo de registros bancarios hacia una arquitectura basada en microservicios y pruebas automatizadas, mejorando rendimiento y mantenibilidad.
           </p>
 <pre class="ascii">
@@ -460,10 +497,10 @@
 
         <article class="project">
           <div class="item-head">
-            <span class="item-title">02. Procesamiento Batch de Alto Volumen</span>
+            <span class="item-title" data-i18n="p2Title">02. Procesamiento Batch de Alto Volumen</span>
             <span class="badge">PRIVATE // BATCH PIPELINE</span>
           </div>
-          <p>
+          <p data-i18n="p2Desc">
             Desarrollo y optimización de flujos batch orientados al procesamiento masivo de datos con lectura, transformación y persistencia eficiente en entornos bancarios.
           </p>
 <pre class="ascii">
@@ -481,10 +518,10 @@
 
         <article class="project">
           <div class="item-head">
-            <span class="item-title">03. Aplicaciones Web de Gestión &amp; Control Horario</span>
+            <span class="item-title" data-i18n="p3Title">03. Aplicaciones Web de Gestión &amp; Control Horario</span>
             <span class="badge">FULLSTACK // WEB APPS</span>
           </div>
-          <p>
+          <p data-i18n="p3Desc">
             Desarrollo de aplicaciones y portales web para gestión de venta de productos y control de horas de empleados, combinando backend en Spring Boot con interfaces web.
           </p>
           <div class="tags">
@@ -505,15 +542,15 @@
         <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
       </div>
       <div class="window-body">
-        <h2>&gt; Flujo de Trabajo con IA (GitHub Copilot &amp; Claude)</h2>
-        <p class="subtitle">
+        <h2 data-i18n="aiTitle">&gt; Flujo de Trabajo con IA (GitHub Copilot &amp; Claude)</h2>
+        <p class="subtitle" data-i18n="aiSubtitle">
           Uso de asistentes de IA como aceleradores técnicos en el ciclo de desarrollo, manteniendo criterio de arquitectura, revisión manual y confidencialidad.
         </p>
         <ul class="clean-list">
-          <li><strong>Refactorización y migración de legacy:</strong> apoyo con <strong>Claude</strong> y <strong>GitHub Copilot</strong> para analizar lógica existente, reducir acoplamiento y agilizar transiciones hacia Java y Spring Boot.</li>
-          <li><strong>Pruebas unitarias y de integración:</strong> generación rápida de escenarios, mocks y casos límite con <strong>JUnit</strong> y <strong>Mockito</strong> para reforzar la cobertura y fiabilidad del código.</li>
-          <li><strong>Análisis de batch, SQL y documentación:</strong> contraste de enfoques de procesamiento, depuración y redacción estructurada de documentación técnica y funcional.</li>
-          <li><strong>Control humano y privacidad:</strong> verificación de cada cambio en pruebas y revisión de código, respetando estrictamente la seguridad y confidencialidad de los datos empresariales.</li>
+          <li data-i18n="aiB1"><strong>Refactorización y migración de legacy:</strong> apoyo con <strong>Claude</strong> y <strong>GitHub Copilot</strong> para analizar lógica existente, reducir acoplamiento y agilizar transiciones hacia Java y Spring Boot.</li>
+          <li data-i18n="aiB2"><strong>Pruebas unitarias y de integración:</strong> generación rápida de escenarios, mocks y casos límite con <strong>JUnit</strong> y <strong>Mockito</strong> para reforzar la cobertura y fiabilidad del código.</li>
+          <li data-i18n="aiB3"><strong>Análisis de batch, SQL y documentación:</strong> contraste de enfoques de procesamiento, depuración y redacción estructurada de documentación técnica y funcional.</li>
+          <li data-i18n="aiB4"><strong>Control humano y privacidad:</strong> verificación de cada cambio en pruebas y revisión de código, respetando estrictamente la seguridad y confidencialidad de los datos empresariales.</li>
         </ul>
       </div>
     </section>
@@ -525,40 +562,40 @@
         <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
       </div>
       <div class="window-body">
-        <h2>&gt; Experiencia &amp; Formación</h2>
+        <h2 data-i18n="expTitle">&gt; Experiencia &amp; Formación</h2>
 
         <div class="exp-item">
           <div class="item-head">
-            <span class="item-title">Desarrollador Web Backend — Accenture</span>
-            <span class="badge">12/2020 - Actualidad · Madrid</span>
+            <span class="item-title" data-i18n="e1Role">Desarrollador Web Backend — Accenture</span>
+            <span class="badge" data-i18n="e1Date">12/2020 - Actualidad · Madrid</span>
           </div>
           <ul class="clean-list">
-            <li>Liderazgo técnico en la migración de sistemas legacy (jBase) a arquitectura Java/Spring Boot para Openbank (módulo de registros bancarios).</li>
-            <li>Desarrollo y optimización de flujos Batch (Spring Batch, PL/SQL, Oracle) de alto volumen para CaixaBank y Openbank.</li>
-            <li>Pruebas unitarias y de integración con JUnit y Mockito, además de apoyo con GitHub Copilot y Claude para refactorización y tests.</li>
-            <li>Documentación técnica y funcional en Excel y Word para especificación, mapeo y estandarización de flujos backend.</li>
+            <li data-i18n="e1b1">Liderazgo técnico en la migración de sistemas legacy (jBase) a arquitectura Java/Spring Boot para Openbank (módulo de registros bancarios).</li>
+            <li data-i18n="e1b2">Desarrollo y optimización de flujos Batch (Spring Batch, PL/SQL, Oracle) de alto volumen para CaixaBank y Openbank.</li>
+            <li data-i18n="e1b3">Pruebas unitarias y de integración con JUnit y Mockito, además de apoyo con GitHub Copilot y Claude para refactorización y tests.</li>
+            <li data-i18n="e1b4">Documentación técnica y funcional en Excel y Word para especificación, mapeo y estandarización de flujos backend.</li>
           </ul>
         </div>
 
         <div class="exp-item">
           <div class="item-head">
-            <span class="item-title">Desarrollador Web Fullstack (y Prácticas) — Melit</span>
-            <span class="badge">04/2019 - 12/2020 · Madrid</span>
+            <span class="item-title" data-i18n="e2Role">Desarrollador Web Fullstack (y Prácticas) — Melit</span>
+            <span class="badge" data-i18n="e2Date">04/2019 - 12/2020 · Madrid</span>
           </div>
           <ul class="clean-list">
-            <li>Desarrollo de aplicaciones y webs de gestión de venta de productos y participación en frontend de gestión de horas de empleados.</li>
-            <li>Stack: JHipster, AngularJS, JavaScript, TypeScript, HTML5, CSS3, Bootstrap, Spring Boot, Java 8, SQL, Git y Jira.</li>
+            <li data-i18n="e2b1">Desarrollo de aplicaciones y webs de gestión de venta de productos y participación en frontend de gestión de horas de empleados.</li>
+            <li data-i18n="e2b2">Stack: JHipster, AngularJS, JavaScript, TypeScript, HTML5, CSS3, Bootstrap, Spring Boot, Java 8, SQL, Git y Jira.</li>
           </ul>
         </div>
 
         <div class="exp-item">
           <div class="item-head">
-            <span class="item-title">Formación Académica</span>
+            <span class="item-title" data-i18n="eduTitle">Formación Académica</span>
             <span class="badge">EDUCATION</span>
           </div>
           <ul class="clean-list">
-            <li><strong>Grado de Ingeniería Informática</strong> — Universitat Oberta de Catalunya (08/2026).</li>
-            <li><strong>Técnico Superior de Desarrollo de Aplicaciones Web</strong> — IES Vista Alegre Madrid (06/2019).</li>
+            <li data-i18n="edu1"><strong>Grado de Ingeniería Informática</strong> — Universitat Oberta de Catalunya (08/2026).</li>
+            <li data-i18n="edu2"><strong>Técnico Superior de Desarrollo de Aplicaciones Web</strong> — IES Vista Alegre Madrid (06/2019).</li>
           </ul>
         </div>
       </div>
@@ -567,7 +604,7 @@
     <!-- #TERMINAL -->
     <section id="terminal" class="window">
       <div class="window-header">
-        <span>[06] bash — interactive shell (escribe 'help' para empezar)</span>
+        <span data-i18n="termHeader">[06] bash — interactive shell (escribe 'help' para empezar)</span>
         <div class="window-dots"><span class="dot"></span><span class="dot"></span></div>
       </div>
       <div class="window-body">
@@ -587,6 +624,113 @@ Escribe 'help' para ver los comandos. Hay 3 flags escondidas en el sistema.
   </div>
 
   <script>
+    let currentLang = "es";
+
+    const translations = {
+      es: {
+        subtitle: "Desarrollador Backend Java · +5 años en aplicaciones críticas, Spring Boot & Spring Batch",
+        meta: "Madrid, España · robersanchmeg@gmail.com · Idiomas: Español (Nativo), Inglés (B1)",
+        heroSummary: "Especializado en diseño, migración y mantenimiento de microservicios con <strong>Java (8/11/17)</strong> y <strong>Spring Boot</strong>, procesos de alto volumen con <strong>Spring Batch</strong> y bases de datos relacionales (<strong>Oracle SQL, PostgreSQL, MySQL</strong>) en entornos <strong>AWS</strong>. Trabajo en entornos Agile apoyándome en asistentes de IA (<strong>GitHub Copilot</strong>, <strong>Claude</strong>) y documentación técnica clara.",
+        downloadCv: "[ ↓ Descargar CV (PDF) ]",
+        cvFile: "cv_Roberto_Sanchez_Megias_es.pdf",
+        contactBtn: "[ Contacto ]",
+        stackTitle: "> Stack Técnico",
+        stackCat1: "// Lenguajes & Frameworks",
+        stackCat2: "// Cloud, DevOps & Testing",
+        stackCat3: "// BBDD, Arquitectura & IA",
+        projectsTitle: "> Arquitecturas & Proyectos",
+        p1Title: "01. Migración de Sistemas Legacy (jBase / T24) a Java & Spring Boot",
+        p1Desc: "Liderazgo técnico en la modernización del módulo de registros bancarios hacia una arquitectura basada en microservicios y pruebas automatizadas, mejorando rendimiento y mantenibilidad.",
+        p2Title: "02. Procesamiento Batch de Alto Volumen",
+        p2Desc: "Desarrollo y optimización de flujos batch orientados al procesamiento masivo de datos con lectura, transformación y persistencia eficiente en entornos bancarios.",
+        p3Title: "03. Aplicaciones Web de Gestión & Control Horario",
+        p3Desc: "Desarrollo de aplicaciones y portales web para gestión de venta de productos y control de horas de empleados, combinando backend en Spring Boot con interfaces web.",
+        aiTitle: "> Flujo de Trabajo con IA (GitHub Copilot & Claude)",
+        aiSubtitle: "Uso de asistentes de IA como aceleradores técnicos en el ciclo de desarrollo, manteniendo criterio de arquitectura, revisión manual y confidencialidad.",
+        aiB1: "<strong>Refactorización y migración de legacy:</strong> apoyo con <strong>Claude</strong> y <strong>GitHub Copilot</strong> para analizar lógica existente, reducir acoplamiento y agilizar transiciones hacia Java y Spring Boot.",
+        aiB2: "<strong>Pruebas unitarias y de integración:</strong> generación rápida de escenarios, mocks y casos límite con <strong>JUnit</strong> y <strong>Mockito</strong> para reforzar la cobertura y fiabilidad del código.",
+        aiB3: "<strong>Análisis de batch, SQL y documentación:</strong> contraste de enfoques de procesamiento, depuración y redacción estructurada de documentación técnica y funcional.",
+        aiB4: "<strong>Control humano y privacidad:</strong> verificación de cada cambio en pruebas y revisión de código, respetando estrictamente la seguridad y confidencialidad de los datos empresariales.",
+        expTitle: "> Experiencia & Formación",
+        e1Role: "Desarrollador Web Backend — Accenture",
+        e1Date: "12/2020 - Actualidad · Madrid",
+        e1b1: "Liderazgo técnico en la migración de sistemas legacy (jBase) a arquitectura Java/Spring Boot para Openbank (módulo de registros bancarios).",
+        e1b2: "Desarrollo y optimización de flujos Batch (Spring Batch, PL/SQL, Oracle) de alto volumen para CaixaBank y Openbank.",
+        e1b3: "Pruebas unitarias y de integración con JUnit y Mockito, además de apoyo con GitHub Copilot y Claude para refactorización y tests.",
+        e1b4: "Documentación técnica y funcional en Excel y Word para especificación, mapeo y estandarización de flujos backend.",
+        e2Role: "Desarrollador Web Fullstack (y Prácticas) — Melit",
+        e2Date: "04/2019 - 12/2020 · Madrid",
+        e2b1: "Desarrollo de aplicaciones y webs de gestión de venta de productos y participación en frontend de gestión de horas de empleados.",
+        e2b2: "Stack: JHipster, AngularJS, JavaScript, TypeScript, HTML5, CSS3, Bootstrap, Spring Boot, Java 8, SQL, Git y Jira.",
+        eduTitle: "Formación Académica",
+        edu1: "<strong>Grado de Ingeniería Informática</strong> — Universitat Oberta de Catalunya (08/2026).",
+        edu2: "<strong>Técnico Superior de Desarrollo de Aplicaciones Web</strong> — IES Vista Alegre Madrid (06/2019).",
+        termHeader: "[06] bash — interactive shell (escribe 'help' para empezar)"
+      },
+      en: {
+        subtitle: "Backend Java Developer · 5+ years in mission-critical systems, Spring Boot & Spring Batch",
+        meta: "Madrid, Spain · robersanchmeg@gmail.com · Languages: Spanish (Native), English (B1)",
+        heroSummary: "Specialized in designing, migrating, and maintaining mission-critical applications with <strong>Java (8/11/17)</strong> and <strong>Spring Boot</strong>, high-volume batch processing with <strong>Spring Batch</strong>, and relational databases (<strong>Oracle SQL, PostgreSQL, MySQL</strong>) on <strong>AWS (EC2, S3)</strong>. Experienced in Agile environments, leveraging AI tools (<strong>GitHub Copilot</strong>, <strong>Claude</strong>) and clear technical documentation.",
+        downloadCv: "[ ↓ Download CV (PDF) ]",
+        cvFile: "cv_Roberto_Sanchez_Megias_en.pdf",
+        contactBtn: "[ Contact ]",
+        stackTitle: "> Tech Stack",
+        stackCat1: "// Languages & Frameworks",
+        stackCat2: "// Cloud, DevOps & Testing",
+        stackCat3: "// Databases, Architecture & AI",
+        projectsTitle: "> Architectures & Projects",
+        p1Title: "01. Legacy Migration (jBase / T24) to Java & Spring Boot",
+        p1Desc: "Technical lead migrating legacy banking record components to a modern Java/Spring Boot architecture with automated tests, improving performance and maintainability.",
+        p2Title: "02. High-Volume Batch Processing",
+        p2Desc: "Design and optimization of high-throughput batch workflows for large data volumes in banking environments using Spring Batch, PL/SQL, Oracle SQL, and AWS.",
+        p3Title: "03. Web Management & Time-Tracking Apps",
+        p3Desc: "Development of product sales management platforms and an employee time-tracking web interface built with Spring Boot, JHipster, AngularJS, and SQL.",
+        aiTitle: "> AI Workflow (GitHub Copilot & Claude)",
+        aiSubtitle: "Using AI assistants to accelerate engineering workflows while keeping architectural judgment, manual code review, and confidentiality.",
+        aiB1: "<strong>Refactoring & legacy migration:</strong> using <strong>Claude</strong> and <strong>GitHub Copilot</strong> to break down legacy logic, reduce coupling, and speed up transitions to Java and Spring Boot.",
+        aiB2: "<strong>Unit & integration testing:</strong> fast generation of test cases, mocks, and edge scenarios with <strong>JUnit</strong> and <strong>Mockito</strong> to support code reliability.",
+        aiB3: "<strong>Batch, SQL & documentation:</strong> cross-checking processing approaches, debugging, and writing structured technical and functional documentation.",
+        aiB4: "<strong>Human review & privacy:</strong> every change is verified and tested manually, strictly respecting data security and enterprise confidentiality.",
+        expTitle: "> Experience & Education",
+        e1Role: "Backend Software Developer — Accenture",
+        e1Date: "12/2020 - Present · Madrid, Spain",
+        e1b1: "Technical lead in migrating legacy systems (jBase) to a modern Java/Spring Boot architecture for Openbank (banking records module).",
+        e1b2: "Designed and optimized high-volume batch processing workflows (Spring Batch, PL/SQL, Oracle) for CaixaBank and Openbank.",
+        e1b3: "Implemented unit and integration tests (JUnit, Mockito) and accelerated refactoring and test creation using GitHub Copilot and Claude.",
+        e1b4: "Authored technical and functional documentation in Excel and Word for backend process specification, mapping, and standardization.",
+        e2Role: "Fullstack Web Developer (and Intern) — Melit",
+        e2Date: "04/2019 - 12/2020 · Madrid, Spain",
+        e2b1: "Developed commercial product sales web applications and contributed to front-end features for an employee time-tracking system.",
+        e2b2: "Tech: JHipster, AngularJS, JavaScript, TypeScript, HTML5, CSS3, Bootstrap, Spring Boot, Java 8, SQL, Git, and Jira.",
+        eduTitle: "Education",
+        edu1: "<strong>Bachelor's Degree in Computer Engineering</strong> — Universitat Oberta de Catalunya (08/2026).",
+        edu2: "<strong>Higher Vocational Qualification in Web Application Development</strong> — IES Vista Alegre, Madrid (06/2019).",
+        termHeader: "[06] bash — interactive shell (type 'help' to start)"
+      }
+    };
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.getElementById("btn-es").classList.toggle("active", lang === "es");
+      document.getElementById("btn-en").classList.toggle("active", lang === "en");
+
+      const dict = translations[lang];
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+
+      const cvLink = document.getElementById("cv-link");
+      cvLink.href = dict.cvFile;
+      cvLink.setAttribute("download", dict.cvFile);
+    }
+
+    document.getElementById("btn-es").addEventListener("click", () => applyLanguage("es"));
+    document.getElementById("btn-en").addEventListener("click", () => applyLanguage("en"));
+
     const output = document.getElementById("terminal-output");
     const input = document.getElementById("cmd-input");
 
@@ -594,53 +738,74 @@ Escribe 'help' para ver los comandos. Hay 3 flags escondidas en el sistema.
     const encodedFlag = "RkxBR3tzcHIxbmdfYjR0Y2hfYjRzMzY0X2QzYzBkM30=";
 
     const commands = {
-      help: () => [
-        "Comandos disponibles:",
-        "  whoami        - Resumen profesional",
-        "  stack         - Stack tecnológico",
-        "  ai            - Uso de GitHub Copilot y Claude",
-        "  experience    - Resumen de trayectoria",
-        "  cv            - Descargar cv_Roberto_Sanchez_Megias_es.pdf",
-        "  ls            - Listar archivos visibles",
-        "  ls -la        - Listar archivos (incluidos ocultos)",
-        "  cat <archivo> - Leer un archivo (ej: cat README.txt)",
-        "  decode        - Decodificar flag #3 en Base64",
-        "  clear         - Limpiar consola"
-      ].join("\n"),
+      help: () => currentLang === "en"
+        ? [
+            "Available commands:",
+            "  whoami        - Profile summary",
+            "  stack         - Core technologies",
+            "  ai            - GitHub Copilot & Claude workflow",
+            "  experience    - Work & education overview",
+            "  cv            - Download current language CV PDF",
+            "  ls            - List visible files",
+            "  ls -la        - List all files (including hidden)",
+            "  cat <file>    - Read a file (e.g. cat README.txt)",
+            "  decode        - Decode base64 flag #3",
+            "  clear         - Clear terminal"
+          ].join("\n")
+        : [
+            "Comandos disponibles:",
+            "  whoami        - Resumen profesional",
+            "  stack         - Stack tecnológico",
+            "  ai            - Uso de GitHub Copilot y Claude",
+            "  experience    - Resumen de trayectoria",
+            "  cv            - Descargar CV en PDF del idioma activo",
+            "  ls            - Listar archivos visibles",
+            "  ls -la        - Listar archivos (incluidos ocultos)",
+            "  cat <archivo> - Leer un archivo (ej: cat README.txt)",
+            "  decode        - Decodificar flag #3 en Base64",
+            "  clear         - Limpiar consola"
+          ].join("\n"),
 
-      whoami: () =>
-        "Roberto Sánchez Megías | Desarrollador Backend Java (+5 años). Java 8/11/17, Spring Boot, Spring Batch, SQL, AWS.",
+      whoami: () => currentLang === "en"
+        ? "Roberto Sánchez Megías | Backend Java Developer (5+ years). Java 8/11/17, Spring Boot, Spring Batch, Oracle SQL, AWS."
+        : "Roberto Sánchez Megías | Desarrollador Backend Java (+5 años). Java 8/11/17, Spring Boot, Spring Batch, SQL, AWS.",
 
       stack: () =>
         "Java 8/11/17, Spring Boot, Spring Batch, Spring Data JPA, Spring Security, Oracle SQL/PL/SQL, PostgreSQL, MySQL, AWS (EC2, S3), Docker, Git, JUnit, Mockito, Copilot, Claude.",
 
-      ai: () =>
-        "Workflow IA: GitHub Copilot + Claude para refactorización de legacy, generación de tests (JUnit/Mockito), contraste de batch/SQL y documentación técnica, siempre con revisión humana.",
+      ai: () => currentLang === "en"
+        ? "AI Workflow: GitHub Copilot + Claude for legacy refactoring, JUnit/Mockito test generation, batch/SQL review, and technical docs—always with human verification."
+        : "Workflow IA: GitHub Copilot + Claude para refactorización de legacy, generación de tests (JUnit/Mockito), contraste de batch/SQL y documentación técnica, siempre con revisión humana.",
 
-      experience: () =>
-        "Accenture (12/2020 - Actualidad): Backend Java / Spring Boot / Spring Batch / Oracle / AWS.\nMelit (04/2019 - 12/2020): Fullstack (JHipster, AngularJS, Spring Boot, SQL).",
+      experience: () => currentLang === "en"
+        ? "Accenture (12/2020 - Present): Backend Java / Spring Boot / Spring Batch / Oracle / AWS.\nMelit (04/2019 - 12/2020): Fullstack (JHipster, AngularJS, Spring Boot, SQL)."
+        : "Accenture (12/2020 - Actualidad): Backend Java / Spring Boot / Spring Batch / Oracle / AWS.\nMelit (04/2019 - 12/2020): Fullstack (JHipster, AngularJS, Spring Boot, SQL).",
 
       cv: () => {
+        const fileName = translations[currentLang].cvFile;
         const link = document.createElement("a");
-        link.href = "cv_Roberto_Sanchez_Megias_es.pdf";
-        link.download = "cv_Roberto_Sanchez_Megias_es.pdf";
+        link.href = fileName;
+        link.download = fileName;
         link.click();
-        return "Descargando cv_Roberto_Sanchez_Megias_es.pdf...";
+        return currentLang === "en" ? `Downloading ${fileName}...` : `Descargando ${fileName}...`;
       },
 
-      ls: () => "README.txt   stack.conf   cv_Roberto_Sanchez_Megias_es.pdf",
+      ls: () => `README.txt   stack.conf   ${translations[currentLang].cvFile}`,
 
       "ls -la": () =>
-        "drwxr-xr-x  roberto  staff  .\n-rw-r--r--  roberto  staff  README.txt\n-rw-r--r--  roberto  staff  stack.conf\n-rw-r--r--  roberto  staff  cv_Roberto_Sanchez_Megias_es.pdf\n-rw-------  roberto  staff  .flag_oculta",
+        `drwxr-xr-x  roberto  staff  .\n-rw-r--r--  roberto  staff  README.txt\n-rw-r--r--  roberto  staff  stack.conf\n-rw-r--r--  roberto  staff  ${translations[currentLang].cvFile}\n-rw-------  roberto  staff  .flag_oculta`,
 
-      "cat readme.txt": () =>
-        "¡Hola! Soy Roberto, Backend Java Developer en Madrid. Si buscas el CV, usa 'cv' o el botón de portada.",
+      "cat readme.txt": () => currentLang === "en"
+        ? "Hi! I'm Roberto, a Backend Java Developer in Madrid. Use 'cv' or the top button to download my CV."
+        : "¡Hola! Soy Roberto, Backend Java Developer en Madrid. Si buscas el CV, usa 'cv' o el botón de portada.",
 
-      "cat .flag_oculta": () =>
-        "¡FLAG #2 encontrada! -> FLAG{h1dd3n_f1l3_l1nux_tr4ck}\nPista para la #3: prueba el comando 'decode'.",
+      "cat .flag_oculta": () => currentLang === "en"
+        ? "FLAG #2 found! -> FLAG{h1dd3n_f1l3_l1nux_tr4ck}\nHint for #3: run 'decode'."
+        : "¡FLAG #2 encontrada! -> FLAG{h1dd3n_f1l3_l1nux_tr4ck}\nPista para la #3: prueba el comando 'decode'.",
 
-      decode: () =>
-        `Decodificando [${encodedFlag}]...\n¡FLAG #3 encontrada! -> ${atob(encodedFlag)}`,
+      decode: () => currentLang === "en"
+        ? `Decoding [${encodedFlag}]...\nFLAG #3 found! -> ${atob(encodedFlag)}`
+        : `Decodificando [${encodedFlag}]...\n¡FLAG #3 encontrada! -> ${atob(encodedFlag)}`,
 
       clear: () => {
         output.textContent = "";
@@ -664,7 +829,9 @@ Escribe 'help' para ver los comandos. Hay 3 flags escondidas en el sistema.
         if (commands[normalized]) {
           printLine(commands[normalized]());
         } else {
-          printLine(`bash: ${raw}: orden no encontrada. Escribe 'help'.`);
+          printLine(currentLang === "en"
+            ? `bash: ${raw}: command not found. Type 'help'.`
+            : `bash: ${raw}: orden no encontrada. Escribe 'help'.`);
         }
         input.value = "";
       }
